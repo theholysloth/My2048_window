@@ -1,7 +1,7 @@
 IMPLEMENTATION 2048 EN CLI
 
 Etape 1 : creation de la grille 
-            la grille sera un tableau de 4*4 contenant des 0 en etat initiale 
+            la grille sera un tableau de 4*4 contenant des 0 en etat initial
             on fera apparaitre un nombre pseudo aleatoire (soit 2 soit 4 ) dans une case vide 
             chaque case de la grille sera definit par des | de part et d'autre. 
                 si la case est vide alors plusieurs caractere espace
@@ -31,10 +31,26 @@ Etape 2 : Gestion des cases
 
 #deplacement dans le readme
 
+Etape 3 : score 
+            initialemnt le score est à 0. Il evoluera en fonction des tuiles additionnées, c'est à dire si on additionne deux cases ayant la valeur 2 , on ajoute 2+2 donc 4 au score ; cc'est pareil pour 4 , 8, 16, ...
+            L'objectif est d'associer une session à un score .
+
+Etape 4 : sauvegarde et chargement
+            L'idee ici est de sauver le score, l'etat de la grille au moment de la sauvegarde et le nom du joueur. Ainsi il sera possible de sauvegarder une partie, de reprendre le cours de celle ci lorsque voulu sans rien perdre.
+            On souhaite utiliser des données JSON pour cela . les données seront de type 
+            {
+                nom : string
+                grille : array[4][4]
+                score : int 
+                mot de passe : string (mot de passe chiffré et optionnel pour le moment)
+            }
+            On rajoute un mdp pour eviter que 2 joueurs du meme nom confondent leurs sauvegarde et aussi pour eviter une usurpation de partie.
+
 Pour le jeu 
-#rajouter un fichier de score
-#rajouter une sauvegarde
-#creation de session
+#rajouter un classement  : 
+#rajouter une sauvegarde : done 
+#creation de session : à moitié
+#rajouter un moyen simple de qitter le jeu 
 
 Etape 3 : Fin de jeu 
             il n'y a fin de jeu que si les conditins suivantes sont remplies : 
