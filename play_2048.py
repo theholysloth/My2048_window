@@ -2,6 +2,7 @@ import numpy as np
 import json
 import init
 import gestion_case
+import classement
 
 
 def game_over(grille):
@@ -29,9 +30,18 @@ def save_game(grille, score, player_name):
     updated = False
     for i, data in enumerate(all_games):
         if data['player_name'] == player_name:
-            all_games[i] = game_data
-            updated = True
-            break
+            print(f"Partie de {player_name} trouvée, avec score {data['score']}. Voulez-vous la remplacer ? (O/N)")
+            ##on affiche la grille??
+            print("############################# Grille Trouvée : #############################\n")
+            init.display_grille(np.array(data['grille']))
+            print("#############################################################################\n")
+            if input().strip().upper() == 'O':
+                all_games[i] = game_data
+                updated = True
+                break
+            else:
+                print("Partie non sauvegardée.")
+                return
     if not updated:
         all_games.append(game_data)
 
@@ -43,19 +53,20 @@ def load_game(player_name):
     try:
         with open('save_game.json', 'r') as f:
             game_data = json.load(f)
-            if game_data['player_name'] == player_name:
-                grille = np.array(game_data['grille'])
-                score = game_data['score']
-                print("Partie chargée avec succès !")
-                return grille, score
-            else:
-                print("Aucune partie sauvegardée pour ce joueur.")
-                return None, 0
+            for game in game_data:
+                if game['player_name'] == player_name:
+                    grille = np.array(game['grille'])
+                    score = game['score']
+                    print("Partie chargée avec succès !")
+                    return grille, score
+                else:
+                    print("Aucune partie sauvegardée pour ce joueur.")
+                    return None, 0
     except FileNotFoundError:
         print("Aucune partie sauvegardée trouvée.")
         return None, 0
 
-def gameplay(grille=None, score=0 , player_name="Player"):
+def gameplay(grille=None, score=0 , player_name="PLAYER"):
     
     #grille = init.add_new_tile(grille)
     while not game_over(grille):
@@ -89,13 +100,29 @@ def gameplay(grille=None, score=0 , player_name="Player"):
             grille = init.add_new_tile(grille)
 
     print("Game Over !")
-
+    print(f"Votre score final est : {score}")
+    save_game(grille, score, player_name)
+    
     init.display_grille(grille)
+    print("Pour voir les 10 meilleurs scores, tapez 'r'. Pour quitter, tapez 'q', Et n'importe quelle autre touche pour recommencer une partie.")
+    while True:
+        choice = input("Votre choix : ").strip().upper()
+        if choice == 'R':
+            classement.classement()
+        elif choice == 'Q':
+            print("Merci d'avoir joué !")
+            break
+        else:
+            grille = init.init_game()
+            score = 0
+            grille = init.add_new_tile(grille)
+            gameplay(grille, score, player_name)
+            break
 
 
 def play():
     print("Bienvenue dans le jeu 2048 made by theholysloth !")
-    player_name = input("Entrez votre nom de joueur : ").strip()
+    player_name = input("Entrez votre nom de joueur : ").strip().upper()
     choice = input("Voulez-vous (N)ouvelle partie ou (C)harger une partie ? ").strip().upper()
 
     if choice == 'N':

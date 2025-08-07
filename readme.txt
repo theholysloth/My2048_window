@@ -44,13 +44,16 @@ Etape 4 : sauvegarde et chargement
                 score : int 
                 mot de passe : string (mot de passe chiffré et optionnel pour le moment)
             }
-            On rajoute un mdp pour eviter que 2 joueurs du meme nom confondent leurs sauvegarde et aussi pour eviter une usurpation de partie.
+            ###On rajoute un mdp pour eviter que 2 joueurs du meme nom confondent leurs sauvegarde et aussi pour eviter une usurpation de partie.
+
+            Avant de sauvegarder une partie pour un joueur , ca serait bien de prevenir s'il a une partie deja dans la BD 
 
 Pour le jeu 
 #rajouter un classement  : 
+    le classement utilisera les donnée JSON, la logiqe serait de comparer et classer les score de la facon la plus intuitive possible
 #rajouter une sauvegarde : done 
 #creation de session : à moitié
-#rajouter un moyen simple de qitter le jeu 
+#rajouter un moyen simple de quitter le jeu 
 
 Etape 3 : Fin de jeu 
             il n'y a fin de jeu que si les conditins suivantes sont remplies : 
