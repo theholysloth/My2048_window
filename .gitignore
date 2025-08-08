@@ -1,4 +1,11 @@
-__pycache__/init.cpython-312.pyc
+2048/lib64
+2048/pyvenv.cfg
+2048/bin/activate
+2048/bin/activate.csh
+2048/bin/
+2048/include/
+2048/lib/
+__pycache__/classement.cpython-312.pyc
 __pycache__/gestion_case.cpython-312.pyc
+__pycache__/init.cpython-312.pyc
 __pycache__/play_2048.cpython-312.pyc
-save_game.json

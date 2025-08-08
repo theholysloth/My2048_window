@@ -48,6 +48,17 @@ Etape 4 : sauvegarde et chargement
 
             Avant de sauvegarder une partie pour un joueur , ca serait bien de prevenir s'il a une partie deja dans la BD 
 
+Etape 5 : rendre tout ca graphique 
+        Pour le moment je n'ai pas trop d'idee mais on va utiliser la bibliotheque pygame pour creer une fenetre pour le jeu.
+
+        Bug du bouton exit de la fenetre.
+        Affichage sur la fenetre , lors des input  : CATASTROPHIQUE
+        Aucun moyen de quitter le jeu
+        la sauvegarde?? (avec la touche S mais c'est tellement pas intuitif car toujours dans le terminal)
+        affichage des 10 bests dans une fenetre 
+        minuteur(peut etre )
+        Ajout de vibration car le jeu est terne oou de son 
+
 Pour le jeu 
 #rajouter un classement  : 
     le classement utilisera les donnée JSON, la logiqe serait de comparer et classer les score de la facon la plus intuitive possible
