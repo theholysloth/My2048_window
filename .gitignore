@@ -9,3 +9,4 @@ __pycache__/classement.cpython-312.pyc
 __pycache__/gestion_case.cpython-312.pyc
 __pycache__/init.cpython-312.pyc
 __pycache__/play_2048.cpython-312.pyc
+2048/save_game.json
