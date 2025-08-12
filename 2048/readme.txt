@@ -59,6 +59,14 @@ Etape 5 : rendre tout ca graphique
         minuteur(peut etre )
         Ajout de vibration car le jeu est terne oou de son 
 
+Etape 6 : Niveaux de difficulté ?? Etant donné que les nombres sont donné de facon pseudo aleatoire pourquoi ne pas truqué l'aleatoire.
+            pour un niveau facile : donner plus de 2, laisser la proba basique ou meme rajouter un undo
+            pour un niveau Moyen : Plus de 4 , avec un undo 
+            POr un niveau difficile : UN nouvel element , une tuile de 8 qui apparait 1/3 du temps avec un undo ?
+            niveau death : tuile de 8 à la same proba que 2 et 4 et plus de UNDO 
+        ca voudra dire separation des classements(surement) Penser à l'affichage de ce dernier d'ailleurs dans la fenetre 
+
+
 Pour le jeu 
 #rajouter un classement  : 
     le classement utilisera les donnée JSON, la logiqe serait de comparer et classer les score de la facon la plus intuitive possible

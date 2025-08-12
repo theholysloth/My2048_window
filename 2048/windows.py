@@ -8,7 +8,7 @@ import sys
 
 pygame.init()
 
-largeur_fenetre = 400
+largeur_fenetre = 700
 hauteur_fenetre = 500
 fenetre = pygame.display.set_mode((largeur_fenetre, hauteur_fenetre))
 pygame.display.set_caption("2048")
@@ -36,7 +36,7 @@ couleurs = {
 
 def afficher_texte_win(texte, position, couleur=NOIR):
     texte_surface = font.render(texte, True, couleur)
-    texte_rect = texte_surface.get_rect(center=(largeur_fenetre // 2, 50))
+    texte_rect = texte_surface.get_rect(center=(position))
     fenetre.blit(texte_surface, texte_rect)
 
 
@@ -53,9 +53,11 @@ def afficher_grille_win(grille):
                 fenetre.blit(texte, texte_rect)
     #pygame.display.flip()
 
-def get_input(prompt, y_position):
+def get_input(prompt, y_position):# prompt ici est le texte à afficher
+    max_length = 14  # Longueur maximale de l'entrée
     input_texte = ""
-    input_rect = pygame.Rect(100, y_position, 200, 32)
+    largeur_rect = 200
+    input_rect = pygame.Rect((largeur_fenetre - largeur_rect)//2, y_position, largeur_rect, 32)
     couleur_active = pygame.Color('lightskyblue3')
     couleur_inactive = pygame.Color('gray15')
     couleur = couleur_inactive
@@ -79,10 +81,23 @@ def get_input(prompt, y_position):
                     elif event.key == pygame.K_BACKSPACE:
                         input_texte = input_texte[:-1]
                     else:
-                        input_texte += event.unicode
+                        if len(input_texte) < max_length:
+                            if event.unicode.isprintable():
+                                input_texte += event.unicode
 
         fenetre.fill(BLANC)
-        afficher_texte_win(prompt, (50, y_position - 30))
+        afficher_texte_win(prompt, (largeur_fenetre //2, y_position - 30))
         pygame.draw.rect(fenetre, couleur, input_rect, 2)
-        afficher_texte_win(input_texte, (input_rect.x + 5, input_rect.y + 5))
+        afficher_texte_win(input_texte, (input_rect.x + 100, input_rect.y +16))
         pygame.display.flip()
+
+
+def bouton(fenetre, font , position, text = "Sauver") : 
+    text_surface = font.render(text,True, NOIR)
+    bouton_rect = pygame.Rect(position, (150,40))
+    pygame.draw.rect(fenetre,(200,200,200), bouton_rect)
+    pygame.draw.rect(fenetre, NOIR, bouton_rect, 2)# contour noir
+    text_rect = text_surface.get_rect(center=bouton_rect.center) 
+    fenetre.blit(text_surface, text_rect)
+    return bouton_rect
+
