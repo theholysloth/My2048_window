@@ -68,7 +68,8 @@ def save_game(grille, score, player_name):
                 pygame.time.wait(1000)
                 print("Partie non sauvegardée.")
                 return
-    if not updated:
+
+    if not updated:#si aucune sauvegarde trouvée
         all_games.append(game_data)
 
     with open('save_game.json', 'w') as f:
@@ -99,10 +100,9 @@ def load_game(player_name):
 def gameplay(grille=None, score=0 , player_name="PLAYER"):
     
     running = True
-    input_active = False
-    input_text = ""
+    
 
-    while not game_over(grille) or running:
+    while not game_over(grille) and running:
         pygame.display.flip()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -132,33 +132,22 @@ def gameplay(grille=None, score=0 , player_name="PLAYER"):
             elif event.type == pygame.KEYDOWN:
                 grille_prec = grille.copy()  # pour vérifier si le joueur a effectué un mouvement
 
-                if not input_active:
-                    if event.key == pygame.K_ESCAPE:
-                        running = False
-                    elif event.key == pygame.K_LEFT:
-                        grille, point_maj = gestion_case.move_left(grille)
-                        score += point_maj
-                    elif event.key == pygame.K_RIGHT:
-                        grille, point_maj = gestion_case.move_right(grille)
-                        score += point_maj
-                    elif event.key == pygame.K_UP:
-                        grille, point_maj = gestion_case.move_up(grille)
-                        score += point_maj
-                    elif event.key == pygame.K_DOWN:
-                        grille, point_maj = gestion_case.move_down(grille)
-                        score += point_maj
-                    elif event.key == pygame.K_s:  # pour sauvegarder
-                        save_game(grille, score, player_name)
-                else:
-                    if event.key == pygame.K_ESCAPE: 
-                        if input_text == "SAVE" : 
-                            save_game(grille, score, player_name)
-                        input_active = False
-                        input_text = ""
-                    elif event.key == pygame.K_BACKSPACE:
-                        input_text = input_text[:-1]
-                    else:
-                        input_text += event.unicode
+                if event.key == pygame.K_ESCAPE:
+                    running = False
+                elif event.key == pygame.K_LEFT:
+                    grille, point_maj = gestion_case.move_left(grille)
+                    score += point_maj
+                elif event.key == pygame.K_RIGHT:
+                    grille, point_maj = gestion_case.move_right(grille)
+                    score += point_maj
+                elif event.key == pygame.K_UP:
+                    grille, point_maj = gestion_case.move_up(grille)
+                    score += point_maj
+                elif event.key == pygame.K_DOWN:
+                    grille, point_maj = gestion_case.move_down(grille)
+                    score += point_maj
+                
+            
 
                 if not np.array_equal(grille, grille_prec):  
                     grille = init.add_new_tile(grille)
@@ -171,14 +160,16 @@ def gameplay(grille=None, score=0 , player_name="PLAYER"):
         bouton_quitter = windows.bouton(fenetre, font, (largeur_fenetre - 170, 80), "Quitter")
         pygame.display.flip()
     
+    print("Game Over !")
     fenetre.fill(BLANC)
-    windows.afficher_texte_win("Game Over !", (largeur_fenetre // 2 - 50, hauteur_fenetre // 2 - 50), NOIR)
-    windows.afficher_texte_win(f"Votre score final est : {score}", (largeur_fenetre // 2 - 100, hauteur_fenetre // 2), NOIR)
-    windows.afficher_texte_win("Appuyez sur 'R' pour voir le classement, 'Q' pour quitter, ou n'importe quelle autre touche pour recommencer.", (10, hauteur_fenetre // 2 + 50))
+    windows.afficher_texte_win("Game Over !", ((largeur_fenetre // 2) + len("game over !")//2, (hauteur_fenetre // 2) - 50), NOIR)
+    windows.afficher_texte_win(f"Votre score final est : {score}", (largeur_fenetre // 2 , hauteur_fenetre // 2), NOIR)
+    windows.afficher_texte_win("Appuyez sur 'R' pour voir le classement, 'Q' pour quitter", (largeur_fenetre //2, hauteur_fenetre // 2 + 50))
+    windows.afficher_texte_win("ou n'importe quelle autre touche pour recommencer.", (largeur_fenetre//2, hauteur_fenetre // 2 + 100), NOIR)
+    #manque un input!!!!
     pygame.display.flip()
 
-    save_game(grille, score, player_name)
-    windows.afficher_grille_win(grille)
+    #windows.afficher_grille_win(grille)
 
     attente_choix = True
     while attente_choix:
@@ -188,9 +179,11 @@ def gameplay(grille=None, score=0 , player_name="PLAYER"):
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:
+                    save_game(grille, score, player_name)
                     classement.classement()
                     attente_choix = False
                 elif event.key == pygame.K_q:
+                    save_game(grille, score, player_name)
                     windows.afficher_texte_win("Merci d'avoir joué !", (largeur_fenetre // 2 - 100, hauteur_fenetre // 2 + 100))
                     pygame.display.flip()
                     pygame.time.wait(2000)
